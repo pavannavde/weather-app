@@ -7,7 +7,12 @@ function fetchLocation() {
     weatherdata.innerHTML="";
   let lat;
   let long;
-  navigator.geolocation.getCurrentPosition(success, error);
+  const options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge:0,
+  };
+  navigator.geolocation.getCurrentPosition(success, error,options);
   function success(position) {
     lat = position.coords.latitude;
     long = position.coords.longitude;
@@ -19,6 +24,8 @@ function fetchLocation() {
     if (err.code === 2) throw new Error("geolocation-unavailable");
     if (err.code === 3) throw new Error("geolocation-timeout");
   }
+  
+  
 }
 
 function renderlocation(lat, long) {
@@ -34,11 +41,10 @@ function renderlocation(lat, long) {
    </div>
    <div class="map-container">
        <!-- <img src="asset/Screenshot 2022-12-14 at 7.18 1.svg" alt="map"> -->
-       <iframe src="https://maps.google.com/maps?q=${lat},  ${long}&z=15&output=embed" style="width:90vw;  height:40vw;" frameborder="0" style="border:0"></iframe>
+       <iframe src="https://maps.google.com/maps?q=${lat},${long}&z=15&output=embed" style="width:90vw;  height:40vw;" frameborder="0" style="border:0"></iframe>
    </div>`;
 
   weatherdata.appendChild(topelement);
-  console.log(2344);
 }
 
 function renderWeatherData(data) {
@@ -46,7 +52,7 @@ function renderWeatherData(data) {
   bottomelement.className = "bottom";
   bottomelement.innerHTML = `<h1>Your Weather Data</h1>
     <div>
-        <span>Locatio : ${data.name}</span>
+        <span>Location: ${data.name}</span>
         <span>Wind Speed : ${Math.floor((data.wind.speed)*3.6)}kmph</span>
         <span>Humidity : ${(data.main.humidity)}</span>
         <span>Time one : GMT +${Number(data.timezone)/3600}</span>
@@ -80,4 +86,5 @@ fetchbtn.addEventListener("click",()=>{
     // window.document.href="https://pavannavde.github.io/weather-app/landing"
     
 });
+
 
