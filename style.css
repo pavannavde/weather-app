@@ -11,6 +11,7 @@ body{
     width:100vw;
     height:100vh;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -99,7 +100,10 @@ span{
     justify-content: start;
     color: #fff;
 }
-@media screen and (max-width:500) {
+::-webkit-scrollbar{
+    display: none;
+}
+@media screen and (max-width:500px) {
 
 .top>h1{
      font-size: 24px;
@@ -124,8 +128,12 @@ span{
     justify-content: center;
     /* padding:5px; */
 }
+.landing-page>h1{
+    font-size: 45px;
+    font-weight: 700;
 }
-@media screen and (max-width:900) and(min-width:500){
+}
+@media screen and (max-width:900px) and(min-width:500px){
 
     .top>h1{
          font-size: 36px;

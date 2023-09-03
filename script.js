@@ -3,15 +3,22 @@ let fetchbtn = document.getElementById("fetch-btn")
 const Apikey = "8517a900612dbf6db921a249b24cbda5";
 const weatherdata = document.getElementById("weather");
 
+
+
+//  ..........fetching current location using geolocation api...............
+
 function fetchLocation() {
     weatherdata.innerHTML="";
+
   let lat;
   let long;
+
   const options = {
     enableHighAccuracy: true,
     timeout: 5000,
     maximumAge:0,
   };
+  
   navigator.geolocation.getCurrentPosition(success, error,options);
   function success(position) {
     lat = position.coords.latitude;
@@ -20,13 +27,27 @@ function fetchLocation() {
     weather(lat, long);
   }
   function error(err) {
-    if (err.code === 1) throw new Error("geolocation-permission_denied");
-    if (err.code === 2) throw new Error("geolocation-unavailable");
-    if (err.code === 3) throw new Error("geolocation-timeout");
-  }
+    if (err.code === 1)
+    {
+      alert("geolocation-permission_denied");
+     throw new Error("geolocation-permission_denied");
+    }
+    if(err.code === 2) 
+    {
+      alert("geolocation-unavailable");
+      throw new Error("geolocation-unavailable")
+    };
+    if (err.code === 3){
+
+      alert("geolocation-timeou");
+      throw new Error("geolocation-timeout");
+    }
+    } 
   
   
 }
+
+//  rendering and displaying  latitude and longitude of current location  and showing on map.......
 
 function renderlocation(lat, long) {
 
@@ -47,6 +68,8 @@ function renderlocation(lat, long) {
   weatherdata.appendChild(topelement);
 }
 
+//  rendering and displaying data of weather at page...........
+
 function renderWeatherData(data) {
   const bottomelement = document.createElement("div");
   bottomelement.className = "bottom";
@@ -65,7 +88,7 @@ function renderWeatherData(data) {
   weatherdata.appendChild(bottomelement);
 }
 
-
+//..........  fetching weather data using api-call by taking  lat and lon of  current location......
 async function weather(lat, long) {
     try{
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${Apikey}&units=metric`);
@@ -77,14 +100,10 @@ async function weather(lat, long) {
       }
   
 }
- 
+  
+    // ............on Clicking fectching latitude ang longitude of current location ........
 fetchbtn.addEventListener("click",()=>{
-   
-    // window.location.href="http://127.0.0.1:5500/landing.html";
-    fetchLocation();
-
-    // window.document.href="https://pavannavde.github.io/weather-app/landing"
-    
+    fetchLocation(); 
 });
 
 
