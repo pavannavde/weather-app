@@ -30,7 +30,7 @@ function renderlocation(lat, long) {
    </div>
    <div class="map-container">
        <!-- <img src="asset/Screenshot 2022-12-14 at 7.18 1.svg" alt="map"> -->
-       <iframe src="https://maps.google.com/maps?q=${lat},  ${long}&z=15&output=embed" width="1240" height="600" frameborder="0" style="border:0"></iframe>
+       <iframe src="https://maps.google.com/maps?q=${lat},  ${long}&z=15&output=embed" style="width:90vw;  height:40vw;" frameborder="0" style="border:0"></iframe>
    </div>`;
 
   weatherdata.appendChild(topelement);
@@ -42,14 +42,14 @@ function renderWeatherData(data) {
   bottomelement.className = "bottom";
   bottomelement.innerHTML = `<h1>Your Weather Data</h1>
     <div>
-        <span>Location:${data.name}</span>
-        <span>Wind Speed:${Math.floor((data.wind.speed)*3.6)}kmph</span>
-        <span>Humidity:${(data.main.humidity)}</span>
-        <span>Time one:GMT +${Number(data.timezone)/3600}</span>
-        <span>Pressure:${Math.ceil((data.main.pressure)*0.0009869233)}atm</span>
-        <span>Wind direction:North West</span>
-        <span>UV Index:500</span>
-        <span>Feels like:${data.main.feels_like}</span>
+        <span>Locatio : ${data.name}</span>
+        <span>Wind Speed : ${Math.floor((data.wind.speed)*3.6)}kmph</span>
+        <span>Humidity : ${(data.main.humidity)}</span>
+        <span>Time one : GMT +${Number(data.timezone)/3600}</span>
+        <span>Pressure : ${Math.ceil((data.main.pressure)*0.0009869233)}atm</span>
+        <span>Wind direction : North West</span>
+        <span>UV Index : 500</span>
+        <span>Feels like : ${data.main.feels_like}°</span>
 
     </div>`;
   weatherdata.appendChild(bottomelement);
@@ -58,9 +58,15 @@ function renderWeatherData(data) {
 fetchLocation();
 
 async function weather(lat, long) {
-  const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${Apikey}&units=metric`);
-  const data = await response.json();
-   renderWeatherData(data);
+    try{
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${Apikey}&units=metric`);
+        const data = await response.json();
+         renderWeatherData(data);
+      }
+      catch(error){
+        console.log(`An error occured : ${error}`)
+      }
+  
 }
 
 /* <div class="top">
